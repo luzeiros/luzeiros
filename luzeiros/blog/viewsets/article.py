@@ -15,6 +15,13 @@ class ArticleViewSet(viewsets.ModelViewSet):
     serializer_class = ArticleSerializer
     permission_classes = [IsAuthorOrReadOnly]
 
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if not instance.is_private:
+            serializer = self.get_serializer(self.get_object())
+            return Response(serializer.data)
+        return Response([])
+
     @action(detail=True)
     def author(self, request, pk=None):
         user = User.objects.get(id=self.get_object().author_id)

@@ -6,7 +6,7 @@ from luzeiros.blog.serializers.comment import CommentSerializer
 
 class UserSerializer(serializers.ModelSerializer):
 
-    articles = ArticleSerializer(many=True, allow_null=True)
+    articles = serializers.SerializerMethodField()
     comments = CommentSerializer(many=True, allow_null=True)
 
     class Meta:
@@ -15,3 +15,6 @@ class UserSerializer(serializers.ModelSerializer):
 
     class JSONAPIMeta:
         included_resources = ['articles', 'comments']
+
+    def get_articles(self, obj):
+        return obj.articles.exclude(is_private=True)
