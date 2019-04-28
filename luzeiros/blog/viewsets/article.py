@@ -11,7 +11,7 @@ from .permissions.is_author import IsAuthorOrReadOnly
 
 
 class ArticleViewSet(viewsets.ModelViewSet):
-    queryset = Article.objects.all()
+    queryset = Article.objects.exclude(is_private=True)
     serializer_class = ArticleSerializer
     permission_classes = [IsAuthorOrReadOnly]
 
