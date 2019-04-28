@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
     'ckeditor',
     'storages',
     'debug_toolbar',
@@ -54,6 +55,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -288,6 +291,11 @@ LOGGING = {
         }
     }
 }
+
+
+# Cross-Origin Resource Sharing
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 
 if os.environ.get("DATABASE_URL"):

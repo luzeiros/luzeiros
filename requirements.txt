@@ -58,6 +58,7 @@ oauth2
 
 # Server
 django-debug-toolbar
+django-cors-headers
 
 # Chats
 channels
