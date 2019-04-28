@@ -1,11 +1,12 @@
 from django.contrib import admin
-from luzeiros.radio.models.program import Program
+from luzeiros.radio.models.presenter import Presenter
+from luzeiros.radio.admin.inlines.program import ProgramInline
 
 
-@admin.register(Program)
-class ProgramAdmin(admin.ModelAdmin):
-    list_display = ['title', 'presenter', 'created_at', 'updated_at']
-    prepopulated_fields = {'slug': ('title',)}
+@admin.register(Presenter)
+class PresenterAdmin(admin.ModelAdmin):
+    list_display = ['id', 'name', 'programs_count', 'updated_at']
+    inlines = [ProgramInline]
 
     # Ensure applications cannot write in admin site
     def has_add_permission(self, request):

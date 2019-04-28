@@ -15,7 +15,11 @@ class Presenter(models.Model):
     class Meta:
         db_table = 'radio_presenters'
         ordering = ['-created_at']
-        
+
+    @property
+    def programs_count(self):
+        return self.programs.count()
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.id = make_identifier()

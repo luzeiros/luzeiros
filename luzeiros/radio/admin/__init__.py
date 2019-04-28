@@ -1,2 +1,3 @@
 # Import/register your modules here...
 from .program import ProgramAdmin
+from .presenter import PresenterAdmin
