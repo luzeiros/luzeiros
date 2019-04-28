@@ -15,7 +15,7 @@ class Article(models.Model):
     language = models.CharField(max_length=3, choices=LANGUAGES, default='pt')
     is_private = models.BooleanField(default=False)
 
-    likes = models.ManyToManyField(User, related_name='likes')
+    likes = models.ManyToManyField(User, related_name='likes', blank=True)
     tags = ArrayField(
         models.CharField(max_length=10), blank=True
     )
