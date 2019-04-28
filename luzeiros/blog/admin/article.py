@@ -5,6 +5,7 @@ from luzeiros.blog.admin.inlines.comment import CommentInline
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
+    list_display = ['title', 'author_name', 'slug', 'comments_count', 'likes_count', 'updated_at']
     inlines = [CommentInline]
     readonly_fields = ['author']
     prepopulated_fields = {'slug': ('title',)}

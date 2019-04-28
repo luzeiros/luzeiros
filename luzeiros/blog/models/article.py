@@ -26,6 +26,18 @@ class Article(models.Model):
     class Meta:
         db_table = 'blog_articles'
         ordering = ['-created_at']
+
+    @property
+    def author_name(self):
+        return self.author.name
+
+    @property
+    def comments_count(self):
+        return self.comments.count()
+
+    @property
+    def likes_count(self):
+        return self.likes.count()
         
     def save(self, *args, **kwargs):
         if not self.id:
