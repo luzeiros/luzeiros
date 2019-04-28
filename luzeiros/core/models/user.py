@@ -10,6 +10,7 @@ class User(AbstractUser):
     id = models.BigIntegerField(primary_key=True, editable=False)
     is_verified = models.BooleanField(default=False)
     photo = models.ImageField(upload_to='users/photos/', blank=True)
+    is_app = models.BooleanField(default=False)
     languages = ArrayField(
         models.CharField(max_length=3, choices=LANGUAGES, default=['pt']), null=True
     )

@@ -9,7 +9,8 @@ from luzeiros.blog.admin.inlines.comment import CommentInline
 class UserAdmin(BaseUserAdmin):
     model = User
     inlines = [ArticleInline, CommentInline]
-    list_display = ['first_name', 'last_name', 'is_verified']
+    list_display = ['first_name', 'last_name', 'is_verified', 'is_app']
+    list_editable = ['is_app']
     prepopulated_fields = {'username': ('first_name', 'last_name',)}
     form = UserChangeForm
     add_form = UserCreationForm
@@ -19,8 +20,18 @@ class UserAdmin(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'photo'),
+            'fields': ('first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'photo', 'is_app'),
         }),
     )
 
     search_fields = ('email', 'username', 'first_name', 'last_name')
+
+    # Ensure applications cannot write in admin site
+    def has_add_permission(self, request):
+        return not request.user.is_app or not request.user.is_active
+
+    def has_change_permission(self, request, obj=None):
+        return not request.user.is_app or not request.user.is_active
+
+    def has_delete_permission(self, request, obj=None):
+        return not request.user.is_app or not request.user.is_active
