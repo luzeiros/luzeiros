@@ -252,7 +252,7 @@ STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/'
 # more details on how to customize your logging configuration.
 
 ADMINS = [
-    ('Lua LMS', 'bot@ekletik.com'),
+    ('Leo', 'leo@ekletik.com'),
 ]
 
 MANAGERS = ADMINS
