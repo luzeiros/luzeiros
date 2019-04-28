@@ -1,0 +1,3 @@
+# Import/register your modules here...
+from .article import ArticleInline
+from .comment import CommentInline

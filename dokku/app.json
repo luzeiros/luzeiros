@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "dokku": {
+      "postdeploy": "/code/./.notify.sh 'Luzeiros is live'",
+      "predeploy": "/code/manage.py migrate --noinput"
+    }
+  }
+}
