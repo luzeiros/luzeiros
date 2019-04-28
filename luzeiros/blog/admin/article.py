@@ -6,6 +6,8 @@ from luzeiros.blog.admin.inlines.comment import CommentInline
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     inlines = [CommentInline]
+    readonly_fields = ['author']
+    prepopulated_fields = {'slug': ('title',)}
 
     # Ensure applications cannot write in admin site
     def has_add_permission(self, request):
@@ -16,3 +18,9 @@ class ArticleAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return not request.user.is_app or not request.user.is_active
+
+    # Ensure current user is assigned as author of article
+    def save_model(self, request, obj, form, change):
+        if not obj.author_id:
+            obj.author_id = request.user.id
+        obj.save()
