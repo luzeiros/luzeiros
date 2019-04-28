@@ -10,7 +10,7 @@ class Program(models.Model):
     presenter = models.ForeignKey(Presenter, related_name='programs', on_delete=models.DO_NOTHING)
     slug = models.SlugField(unique=True)
     description = models.TextField(blank=True)
-    artwork = models.ImageField(blank=True, upload_to='uploads/')
+    artwork = models.ImageField(blank=True, upload_to='uploads/programs/')
     featured = models.BooleanField(default=False)
     recurrences = RecurrenceField()
 
