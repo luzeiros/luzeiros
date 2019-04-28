@@ -12,7 +12,7 @@ class Article(models.Model):
     slug = models.SlugField(unique=True)
     content = models.TextField(blank=True)
     image = models.ImageField(blank=True, upload_to='uploads')
-    language = models.CharField(max_length=3, default='pt')
+    language = models.CharField(max_length=3, choices=LANGUAGES, default='pt')
     is_private = models.BooleanField(default=False)
 
     likes = models.ManyToManyField(User, related_name='likes')
