@@ -8,8 +8,13 @@ from django.urls import path, include
 from django.conf import settings
 from rest_framework_swagger.views import get_swagger_view
 from rest_framework_simplejwt import views as jwt_views
+from django.views.i18n import JavaScriptCatalog
 
 api_schema_docs = get_swagger_view(title='Luzeiros API')
+
+js_info_dict = {
+    'packages': ('recurrence', ),
+}
 
 urlpatterns = [
     # Application urls
@@ -27,6 +32,10 @@ urlpatterns = [
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+
+    # Static asset
+    # jsi18n can be anything you like here
+    path('jsi18n/$', JavaScriptCatalog.as_view(), js_info_dict),
 ]
 
 if settings.DEBUG:
