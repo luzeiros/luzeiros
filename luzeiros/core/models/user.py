@@ -26,6 +26,10 @@ class User(AbstractUser):
     def name(self):
         return f"{self.first_name} {self.last_name}"
 
+    @property
+    def auth_token(self):
+        return Token.objects.get_or_create(user_id=self.id)
+
     def clean(self):
         super().clean()
         self.username = self.username.lower()
@@ -35,6 +39,6 @@ class User(AbstractUser):
             self.id = make_identifier()
         super().save(*args, **kwargs)
         Token.objects.get_or_create(user_id=self.id)
-    
+
     def __str__(self):
         return self.username

@@ -9,7 +9,7 @@ from luzeiros.blog.admin.inlines.comment import CommentInline
 class UserAdmin(BaseUserAdmin):
     model = User
     inlines = [ArticleInline, CommentInline]
-    list_display = ['first_name', 'last_name', 'is_verified', 'is_app']
+    list_display = ['name', 'auth_token', 'is_verified', 'is_app']
     list_editable = ['is_app']
     prepopulated_fields = {'username': ('first_name', 'last_name',)}
     form = UserChangeForm
