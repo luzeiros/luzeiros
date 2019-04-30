@@ -6,4 +6,4 @@ from .inlines import TrackInline
 @admin.register(Album)
 class AlbumAdmin(admin.ModelAdmin):
     inlines = [TrackInline]
-    list_display = ['title', 'artist', 'tracks_count']
+    list_display = ['title', 'artist', 'tracks_count', 'release_date']

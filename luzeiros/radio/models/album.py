@@ -9,6 +9,7 @@ class Album(models.Model):
     title = models.CharField(max_length=100)
     artwork = models.ImageField(blank=True, upload_to=path_for_album)
     artist = models.ForeignKey(Artist, related_name='albums', on_delete=models.CASCADE)
+    release_date = models.DateField(auto_now_add=True)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
