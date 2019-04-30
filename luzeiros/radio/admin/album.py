@@ -7,3 +7,4 @@ from .inlines import TrackInline
 class AlbumAdmin(admin.ModelAdmin):
     inlines = [TrackInline]
     list_display = ['title', 'artist', 'tracks_count', 'release_date']
+    list_editable = ['release_date']
