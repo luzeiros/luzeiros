@@ -35,7 +35,7 @@ urlpatterns = [
 
     # Static asset
     # jsi18n can be anything you like here
-    path('jsi18n/$', JavaScriptCatalog.as_view(), js_info_dict),
+    path('jsi18n/', JavaScriptCatalog.as_view(), js_info_dict),
 ]
 
 if settings.DEBUG:
