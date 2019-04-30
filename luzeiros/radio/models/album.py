@@ -6,7 +6,7 @@ from .artist import Artist
 
 class Album(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    title = models.CharField(blank=True, max_length=30)
+    title = models.CharField(max_length=100)
     artwork = models.ImageField(blank=True, upload_to=path_for_album)
     artist = models.ForeignKey(Artist, related_name='albums', on_delete=models.CASCADE)
 

@@ -5,7 +5,7 @@ from .helpers.music import path_for_artist
 
 class Artist(models.Model):
     id = models.BigIntegerField(primary_key=True, editable=False)
-    name = models.CharField(blank=True, max_length=30)
+    name = models.CharField(max_length=30)
     photo = models.ImageField(blank=True, upload_to=path_for_artist)
     
     # Default fields. Omit with the --no-defaults flag

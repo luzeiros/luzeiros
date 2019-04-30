@@ -11,7 +11,7 @@ class Track(models.Model):
     duration = models.IntegerField(blank=True)
     artist = models.ForeignKey(Artist, related_name='tracks', on_delete=models.CASCADE)
     album = models.ForeignKey(Album, related_name='tracks', on_delete=models.CASCADE)
-    preview_file = models.FileField(upload_to=path_for_track)
+    preview_file = models.FileField(blank=True, upload_to=path_for_track)
 
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True, editable=False)
@@ -32,6 +32,10 @@ class Track(models.Model):
     @property
     def related_tracks_by_album(self):
         return self.album.tracks.all()
+
+    @property
+    def has_preview(self):
+        return self.preview_file is not None
 
     def __str__(self):
         return self.title

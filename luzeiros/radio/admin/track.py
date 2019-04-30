@@ -4,4 +4,4 @@ from luzeiros.radio.models.track import Track
 
 @admin.register(Track)
 class TrackAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['title', 'album', 'artist', 'has_preview']
