@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext, gettext_lazy as _
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin, UserChangeForm, UserCreationForm, AdminPasswordChangeForm
 from luzeiros.core.models.user import User
 from luzeiros.blog.admin.inlines.article import ArticleInline
@@ -8,7 +9,6 @@ from luzeiros.blog.admin.inlines.comment import CommentInline
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
     model = User
-    inlines = [ArticleInline, CommentInline]
     list_display = ['id', 'name', 'auth_token', 'is_verified', 'is_app']
     list_editable = ['is_app']
     prepopulated_fields = {'username': ('first_name', 'last_name',)}
@@ -16,6 +16,15 @@ class UserAdmin(BaseUserAdmin):
     add_form = UserCreationForm
     change_password_form = AdminPasswordChangeForm
     readonly_fields = ('date_joined', 'last_login',)
+
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'photo')}),
+        (_('Permissions'), {
+            'fields': ('is_app', 'is_verified', 'is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
+        }),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
 
     add_fieldsets = (
         (None, {
