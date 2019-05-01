@@ -13,14 +13,17 @@ class ArticleAdmin(admin.ModelAdmin):
 
     # Ensure applications cannot write in admin site
     def has_add_permission(self, request):
-        return not request.user.is_app or not request.user.is_active
+        return not request.user.is_app and request.user.is_active
 
     def has_change_permission(self, request, obj=None):
-        return not request.user.is_app and \
-               (request.user.is_active and obj.author_id == request.user.id)
+        if obj is not None:
+            return request.user == obj.author
+        return False
 
     def has_delete_permission(self, request, obj=None):
-        return not request.user.is_app or not request.user.is_active
+        if obj is not None:
+            return request.user == obj.author
+        return False
 
     # Ensure current user is assigned as author of article
     def save_model(self, request, obj, form, change):
