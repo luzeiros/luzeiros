@@ -12,8 +12,8 @@ class CommentAdmin(admin.ModelAdmin):
         return not request.user.is_app or not request.user.is_active
 
     def has_change_permission(self, request, obj=None):
-        return not request.user.is_app or not request.user.is_active \
-               and obj.author_id == request.user.id
+        return not request.user.is_app and \
+               (request.user.is_active and obj.author_id == request.user.id)
 
     def has_delete_permission(self, request, obj=None):
         return not request.user.is_app or not request.user.is_active
