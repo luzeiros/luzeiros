@@ -4,4 +4,4 @@ from ..models.station import Station
 
 @admin.register(Station)
 class StationAdmin(admin.ModelAdmin):
-    pass
+    list_display = ['name', 'shortcode', 'language', 'country']
