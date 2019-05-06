@@ -50,7 +50,7 @@ class Azura(object):
                                  'relationships': {
                                      'mounts': mounts,
                                      'remotes': remotes,
-                                     'song-history': {
+                                     'history': {
                                          'last': last_0,
                                          'before-last': last_1
                                      }
@@ -108,7 +108,7 @@ class Azura(object):
                               'relationships': {
                                   'mounts': mounts,
                                   'remotes': remotes,
-                                  'song-history': {
+                                  'history': {
                                       'last': last_0,
                                       'before-last': last_1
                                   }
