@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import re
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,7 +22,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", 'This is a default value')
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG") == 'True'
@@ -247,56 +248,61 @@ MEDIA_URL = '/media/'
 STATIC_URL = f'{AWS_S3_ENDPOINT_URL}/'
 
 
-# Error Logging
-# A sample logging configuration. The only tangible logging
-# performed by this configuration is to send an email to
-# the site admins on every HTTP 500 error when DEBUG=False.
-# See http://docs.djangoproject.com/en/dev/topics/logging for
-# more details on how to customize your logging configuration.
-
-ADMINS = [
-    ('Leo', 'leo@ekletik.com'),
-]
-
-MANAGERS = ADMINS
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
-    },
-    'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': True,
-        },
-        'two_factor': {
-            'handlers': ['console'],
-            'level': 'INFO',
-        }
-    }
-}
-
-
 # Cross-Origin Resource Sharing
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': os.environ.get('SECRET_KEY'),
+    'VERIFYING_KEY': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer', 'Token'),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
+
+    'SLIDING_TOKEN_REFRESH_EXP_CLAIM': 'refresh_exp',
+    'SLIDING_TOKEN_LIFETIME': timedelta(minutes=5),
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+}
+
+SWAGGER_SETTINGS = {
+    "LOGIN_URL": 'rest_framework:login',
+    "LOGOUT_URL": 'rest_framework:logout',
+    "APIS_SORTER": "alpha",
+    "DOC_EXPANSION": "None",
+    "USE_SESSION_AUTH": True,
+
+    "SHOW_REQUEST_HEADERS": True,
+
+    "JSON_EDITOR": True,
+    "OPERATIONS_SORTER": 'method',
+    "SECURITY_DEFINITIONS": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "Token ",
+            "in": "header"
+        }
+    },
+}
+
+
+from .settings_ckeditor import *
 
 if os.environ.get("DATABASE_URL"):
     # Advanced error reporting in production
@@ -306,10 +312,6 @@ if os.environ.get("DATABASE_URL"):
     from sentry_sdk.integrations.django import DjangoIntegration
 
     sentry_sdk.init(
-        dsn="https://7eee25a831b14cddaed9cf3b213084ec@sentry.io/1448109",
+        dsn=os.environ.get("SENTRY_DSN"),
         integrations=[DjangoIntegration()]
     )
-
-from .settings_ckeditor import *
-
-from .settings_drf import *
