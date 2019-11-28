@@ -70,7 +70,7 @@ class Azura(object):
         except BaseHTTPError:
             raise BaseHTTPError('Error')
 
-        if res == "Station not found.":
+        if req.status_code != 200:
             return json.dumps({"errors": [
                 {
                     'detail': 'Not found.',
