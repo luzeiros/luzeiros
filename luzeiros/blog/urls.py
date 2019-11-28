@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .viewsets import router
+from .viewsets.router import router
 
 
 urlpatterns = [

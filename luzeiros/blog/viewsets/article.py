@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from .router import router
 from luzeiros.blog.models.article import Article
 from luzeiros.blog.models.comment import Comment
 from luzeiros.core.models.user import User
@@ -53,3 +54,6 @@ class ArticleViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(articles, many=True)
         return Response(serializer.data)
+
+
+router.register('articles', ArticleViewSet)

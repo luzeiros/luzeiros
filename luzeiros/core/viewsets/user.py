@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from .router import router
 from luzeiros.core.models.user import User
 from luzeiros.core.serializers.user import UserSerializer
 from .permissions.is_user import IsUserOrReadOnly
@@ -25,3 +26,6 @@ class UserViewSet(viewsets.ModelViewSet):
         queryset = User.objects.get(username=request.user)
         serializer = UserSerializer(queryset)
         return Response(serializer.data)
+
+
+router.register('users', UserViewSet)

@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .viewsets import router
+from .viewsets.router import router
 from .views.stations import get_stations, get_station
 
 
