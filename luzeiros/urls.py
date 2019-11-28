@@ -30,8 +30,9 @@ urlpatterns = [
 
     # Application urls
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/token/verify/', jwt_views.TokenVerifyView.as_view(), name='token_verify'),
 
     # Static asset
     # jsi18n can be anything you like here
