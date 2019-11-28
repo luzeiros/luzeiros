@@ -1,6 +1,7 @@
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework import permissions
 from .router import router
 from luzeiros.core.models.user import User
 from luzeiros.core.serializers.user import UserSerializer
@@ -12,7 +13,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     filter_fields = ['id', 'username', 'first_name', 'last_name', 'email']
     search_fields = ['id', 'username', 'first_name', 'last_name', 'email']
-    permission_classes = [IsUserOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsUserOrReadOnly]
     filterset_fields = {
         'id': ('in', 'exact', 'lt', 'gt', 'gte', 'lte'),
         'username': ('contains', 'icontains', 'iexact'),
