@@ -8,4 +8,15 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        exclude = ('password', 'is_superuser', 'is_staff', 'last_login', 'user_permissions')
+        exclude = (
+            'password',
+            'is_active',
+            'is_superuser',
+            'is_staff',
+            'is_app',
+            'last_login',
+            'date_joined',
+            'user_permissions',
+            'email',
+            'groups',
+        )
