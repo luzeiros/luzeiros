@@ -50,9 +50,9 @@ INSTALLED_APPS = [
     'rest_framework_httpsignature',
     'rest_framework_swagger',
 
-    'luzeiros.core',
-    'luzeiros.blog',
-    'luzeiros.radio'
+    'luzeiros.core.apps.CoreConfig',
+    'luzeiros.blog.apps.BlogConfig',
+    'luzeiros.radio.apps.RadioConfig'
 ]
 
 MIDDLEWARE = [
@@ -263,6 +263,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
 
     'DEFAULT_PAGINATION_CLASS': 'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
+
+    'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
 
     'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
 
